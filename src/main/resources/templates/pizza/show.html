@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>PizzaJava</title>
+	</head>
+	<body>
+		<main style="margin: 50px;">
+			<h1 style="text-align: center;">Pizzeria (show)</h1>
+	
+			<section th:object="${pizza}">
+				<h2>[[*{name}]] - prezzo: [[*{price}]] euro</h2>
+				<p>[[*{description}]]</p>
+				<img width="200px" alt="pizza-img" th:src="@{*{picture}}">
+				
+				<h2>Offerte speciali:</h2>
+				
+				<a style="color: green;" th:href="@{/admin/pizza/{pizzaId}/special-offer/create (pizzaId = *{id})}" sec:authorize="hasAuthority('ADMIN')">Crea nuova offerta speciale</a>
+				
+				<ul>
+					<li style="margin-bottom: 10px;" th:each="specialOffer : ${specialOffers}" th:object="${specialOffer}">
+						<h3>[[*{title}]] - sconto applicato: [[*{discount}]]%</h3>
+						<p>Data di inizio offerta: [[*{startDate}]]</p>
+						<p>Data di fine offerta: [[*{endDate}]]</p>
+						<p>Prezzo scontato: [[*{discountedPrice}]] E</p>
+						<a th:href="@{/admin/pizza/{pizzaId}/special-offer/edit/{id} (pizzaId = ${pizza.id}, id=*{id})}" sec:authorize="hasAuthority('ADMIN')">MODIFICA OFFERTA</a>
+					</li>
+				</ul>
+				
+				<div th:if="${ingredients.size() > 0}">
+					<h2>Ingredienti:</h2>
+					
+					<a style="color: green;" th:href="@{/admin/ingredients/create}" sec:authorize="hasAuthority('ADMIN')">Crea nuovo ingrediente</a>
+					
+					<ul>
+						<li style="margin-bottom: 10px;" th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+							<h3>[[*{name}]]</h3>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</main>
+	</body>
+</html>

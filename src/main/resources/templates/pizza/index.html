@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>PizzaJava</title>
+	</head>
+	<body>
+		<main style="margin: 50px;">
+			<div style="margin-bottom: 50px;">
+				<h1 style="text-align: center;">Pizzeria</h1>
+				<a style="color: green; font-size: 25px;" th:href="@{/login}" sec:authorize="!isAuthenticated()">LOGIN</a>
+				<a style="color: red; font-size: 25px;" th:href="@{/logout}" sec:authorize="isAuthenticated()">LOGOUT</a>
+			</div>
+			
+			
+			<form style="margin-bottom: 20px; display: inline-block;" th:action="@{/pizza/filter}" method="POST">
+				<label for="pizza-name">Nome pizza</label>
+				<input id="pizza-name" type="text" name="name" th:value="${name}">
+				<button>Filtra</button>
+			</form>
+			
+			<a style="color: green; margin-left: 20px;" th:href="@{/admin/pizza/create}" sec:authorize="hasAuthority('ADMIN')">Crea nuova pizza</a>
+			
+			<a style="color: purple; margin-left: 20px;" th:href="@{/ingredients/user}" sec:authorize="hasAuthority('USER')">VEDI INGREDIENTI</a>
+			
+			<div th:if="${pizzaList.size() == 0}">
+				Non ci sono pizze qui.
+			</div>
+			
+			<div style="margin-bottom: 10px;" th:if="${pizzaList.size() > 0}" th:each="pizza : ${pizzaList}" th:object="${pizza}">
+				<a th:href="@{/pizza/{id} (id=*{id})}">[[ *{name} ]]</a>
+				<a style="margin-left: 5px;" th:href="@{/admin/pizza/delete/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">DELETE</a>
+				<a style="margin-left: 5px;" th:href="@{/admin/pizza/edit/{id} (id=*{id})}" sec:authorize="hasAuthority('ADMIN')">EDIT</a>
+			</div>
+		</main>
+	</body>
+</html>

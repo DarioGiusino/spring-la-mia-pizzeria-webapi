@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>PizzaJava</title>
+	</head>
+	<body>
+		<main style="margin: 50px;">
+			<h1 style="text-align: center;">Special Offer (create)</h1>
+			
+			<form th:action="@{/admin/pizza/{pizzaId}/special-offer/store (pizzaId = ${pizzaId})}" method="POST" th:object="${specialOffer}">
+						
+				<label for="special-offer-title">Titotlo offerta speciale</label>
+				<input id="special-offer-title" type="text" name="title">
+				<label style="color: red" th:if="${errors != null && errors.hasFieldErrors('title')}">
+					[[ ${errors.getFieldError('title').defaultMessage} ]]
+				</label>
+				
+				<br>
+				
+				<label for="special-offer-start-date">Data inizio offerta</label>
+				<input id="special-offer-start-date" type="date" name="start_date" th:field="*{startDate}">
+				
+				<br>
+				
+				<label for="special-offer-end-date">Data fine offerta</label>
+				<input id="special-offer-end-date" type="date" name="end_date" th:field="*{endDate}">
+				
+				<br>
+				
+				<label for="special-offer-discount">Sconto applicato</label>
+				<input id="special-offer-discount" type="number" name="discount" step="1" min="0" max="100">
+				<label style="color: red" th:if="${errors != null && errors.hasFieldErrors('discount')}">
+					[[ ${errors.getFieldError('discount').defaultMessage} ]]
+				</label>
+				
+				<br>
+				
+				<button>Crea nuova offerta!</button>
+			</form>
+		</main>
+	</body>

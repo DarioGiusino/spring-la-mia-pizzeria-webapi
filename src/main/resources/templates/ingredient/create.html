@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>PizzaJava</title>
+	</head>
+	<body>
+		<main style="margin: 50px;">
+			<h1 style="text-align: center;">Ingredient (create)</h1>
+			
+			<form th:action="@{/ingredients/admin/store}" method="POST">
+						
+				<label for="ingredient-name">Nome ingrediente</label>
+				<input id="ingredient-name" type="text" name="name">
+				<label style="color: red" th:if="${errors != null && errors.hasFieldErrors('name')}">
+					[[ ${errors.getFieldError('name').defaultMessage} ]]
+				</label>
+				
+				<br>
+				
+				<button>Crea nuovo ingrediente!</button>
+			</form>
+		</main>
+	</body>

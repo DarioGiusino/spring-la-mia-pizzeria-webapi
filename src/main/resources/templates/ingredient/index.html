@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>PizzaJava</title>
+	</head>
+	<body>
+		<main style="margin: 50px;">
+			<h1 style="text-align: center;">Ingredienti della Pizzeria</h1>
+			
+			<a style="color: green; margin-bottom: 20px; display: inline-block;" th:href="@{/ingredients/admin/create}" sec:authorize="hasAuthority('ADMIN')">Crea nuovo ingrediente</a>
+			
+			<div th:if="${ingredients.size() == 0}">
+				Non ci sono ingredienti qui.
+			</div>
+			
+			<ul th:if="${ingredients.size() > 0}">
+				<li th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+					[[ *{name} ]] <a th:href="@{/ingredients/admin/delete/{id} (id = *{id})}" sec:authorize="hasAuthority('ADMIN')">DELETE</a>
+				</li>				
+			</ul>
+		</main>
+	</body>
+</html>

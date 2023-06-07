@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>PizzaJava</title>
+	</head>
+	<body>
+		<main style="margin: 50px;">
+			<h1 style="text-align: center;">Pizzeria (create)</h1>
+			
+			<form th:action="@{/admin/pizza/store}" method="POST">
+				<label for="pizza-name">Nome pizza</label>
+				<input id="pizza-name" type="text" name="name">
+				<label style="color: red" th:if="${errors != null && errors.hasFieldErrors('name')}">
+					[[ ${errors.getFieldError('name').defaultMessage} ]]
+				</label>
+				
+				<br>
+				
+				<label for="pizza-description">Descrizione pizza</label>
+				<textarea id="pizza-description" rows="10" cols="20" name="description"></textarea>
+				
+				<br>
+				
+				<label for="pizza-price">Foto pizza</label>
+				<input id="pizza-price" type="url" name="picture">
+				
+				<br>
+				
+				<label for="pizza-name">Prezzo pizza</label>
+				<input id="pizza-name" type="number" name="price" step="0.01" min="0.01" max="99.99">
+				<label style="color: red" th:if="${errors != null && errors.hasFieldErrors('price')}">
+					[[ ${errors.getFieldError('price').defaultMessage} ]]
+				</label>
+				
+				<br>
+				
+				<div th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+					<input th:id="${'ingredient-' + ingredient.id}" type="checkbox" th:value="*{id}" name="ingredients">
+					<label th:id="${'ingredient-' + ingredient.id}">[[ *{name} ]]</label>
+				</div>
+				
+				<br>
+				
+				<button>Crea nuova pizza!</button>
+			</form>
+		</main>
+	</body>
