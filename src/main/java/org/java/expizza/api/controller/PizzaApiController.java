@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.java.expizza.pojo.Pizza;
+import org.java.expizza.pojo.SpecialOffer;
 import org.java.expizza.serv.PizzaService;
+import org.java.expizza.serv.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ public class PizzaApiController {
 
 	@Autowired
 	private PizzaService pizzaService;
+	
+	@Autowired
+	private SpecialOfferService specialOfferService;
 
 	@GetMapping("/pizzas")
 	public ResponseEntity<List<Pizza>> apiIndex() {
@@ -85,12 +90,17 @@ public class PizzaApiController {
 		
 		Optional<Pizza> optPizza = pizzaService.findById(id);
 		
+		
 		if (optPizza.isEmpty()) {
 			
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
 		}
 		
 		Pizza pizza = optPizza.get();
+		
+		for (SpecialOffer so : pizza.getSpecialOffers()) {
+			specialOfferService.delete(so);
+		}
 		pizzaService.delete(pizza);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
