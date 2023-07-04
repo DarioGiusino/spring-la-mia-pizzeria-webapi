@@ -64,12 +64,14 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		Pizza pizza3 = new Pizza("Napoli", "La bella Napoli", "https://picsum.photos/200/300", 11.99f, i5, i6);
 		Pizza pizza4 = new Pizza("Parmigiana", "La bella Parmigiana", "https://picsum.photos/200/300", 12.99f);
 		Pizza pizza5 = new Pizza("Biancaneve", "La bella Biancaneve", "https://picsum.photos/200/300", 13.99f, i4);
+		Pizza pizza6 = new Pizza("Acciughe e olive", "La bella acciughina", "https://picsum.photos/200/300", 14.99f, i1,i4);
 		
 		pizzaService.save(pizza1);
 		pizzaService.save(pizza2);
 		pizzaService.save(pizza3);
 		pizzaService.save(pizza4);
 		pizzaService.save(pizza5);
+		pizzaService.save(pizza6);
 		
 //		--------------------------------------------------------------------------------------------------------------------
 		
